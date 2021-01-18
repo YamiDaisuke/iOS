@@ -32,7 +32,7 @@ class ThemeManagerTests: XCTestCase {
     }
     
     private class MockRootControllerProvider: RootControllerProvider {
-        var rootController: UIViewController?
+        var rootControllers: [UIViewController] = []
     }
     
     func testWhenApplyingThemeOnThemeChangeThenControllerShouldBeUpdated() {
@@ -43,7 +43,7 @@ class ThemeManagerTests: XCTestCase {
         mockRootController.onDecorate = expectDecoration
         
         let mockRootControllerProvider = MockRootControllerProvider()
-        mockRootControllerProvider.rootController = mockRootController
+        mockRootControllerProvider.rootControllers = [mockRootController]
         
         let manager = ThemeManager(settings: AppUserDefaults(),
                                    rootProvider: mockRootControllerProvider)

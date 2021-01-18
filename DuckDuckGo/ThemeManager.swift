@@ -20,14 +20,14 @@ import UIKit
 import Core
 
 protocol RootControllerProvider {
-    var rootController: UIViewController? { get }
+    var rootControllers: [UIViewController] { get }
 }
 
 class ThemeManager {
     
     class UIApplicationRootControllerProvider: RootControllerProvider {
-        var rootController: UIViewController? {
-            return UIApplication.shared.keyWindow?.rootViewController
+        var rootControllers: [UIViewController] {
+            return UIApplication.shared.windows.compactMap { $0.rootViewController }
         }
     }
     
@@ -43,7 +43,7 @@ class ThemeManager {
     var rootControllerProvider: RootControllerProvider
     private(set) var currentTheme: Theme {
         didSet {
-            rootControllerProvider.rootController?.applyTheme(currentTheme)
+            rootControllerProvider.rootControllers.forEach { $0.applyTheme(currentTheme) }
         }
     }
     
